@@ -37,9 +37,9 @@ enum class Action_type {
     PROPFIND = 5,
 };
 
-typedef struct Request {
+typedef struct Request_info {
     Action_type action;
     str url;
     str protocol;
     str extension;
-} Request;
+} Request_info;
