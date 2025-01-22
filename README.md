@@ -34,7 +34,7 @@
 
 ## Classe `stats`
 **Attributs :**
-- `url_map` (map) : clé : url, valeur : [date/heure, Referer]
+- `url_map` (unordered map) : clé : url, valeur : [date/heure, Referer]
 
 **Constructeurs/Destructeurs :**
 - Par défaut
