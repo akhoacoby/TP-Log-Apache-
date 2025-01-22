@@ -42,4 +42,4 @@
 
 	**Méthodes :**
   - 'Ajouter un log' (surcharge de l'opérateur '+')
-  - 'Statistiques' : compter le top 10 (avec options de séléction -e, -g, -t) 
+  - 'Statistiques' : compter le top 10 (avec options de séléction -e, -t et d'affichage du graphe -g) 
