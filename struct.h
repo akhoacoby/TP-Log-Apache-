@@ -2,7 +2,7 @@ typedef struct time_zone {
     int signe;   // +1 ou -1 
     unsigned int hour; // déclage en valeur absolue
     unsigned int minute;  
-};
+} TimeZone;
 
 enum class Month {
     JAN = 1,    
@@ -27,7 +27,7 @@ typedef struct Date {
     unsigned int minute; 
     unsigned int second; 
     TimeZone zone;      
-};
+} Date;
 
 enum class Action_type {
     GET = 1,
@@ -42,4 +42,4 @@ typedef struct Request {
     str url;
     str protocol;
     str extension;
-};
+} Request;
