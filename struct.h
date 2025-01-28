@@ -1,3 +1,9 @@
+#ifndef STRUCT_H
+#define STRUCT_H
+
+#include <string>
+using namespace std;
+
 typedef struct time_zone {
     int signe;   // +1 ou -1 
     unsigned int hour; // déclage en valeur absolue
@@ -39,7 +45,9 @@ enum class Action_type {
 
 typedef struct Request_info {
     Action_type action;
-    str url;
-    str protocol;
-    str extension;
+    string url;
+    string protocol;
+    string extension;
 } Request_info;
+
+#endif
