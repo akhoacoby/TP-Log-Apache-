@@ -80,8 +80,8 @@ public:
         fichier << "digraph G {\n";
 
         for (int i = 0; i < graph_vec.size(); i++) {
-            fichier << "node" << i << " [label=\"" << graph_vec[i].first << "\"];\n"; 
-            fichier << "node" << i << "->" << graph_vec[i].second.second << " [label=\"" << graph_vec[i].second.first << "\"];\n";
+            fichier << "node" + itos(i) << " [label=\"" << graph_vec[i].first << "\"];\n"; 
+            fichier << "node" + itos(i) << "->" << graph_vec[i].second.second << " [label=\"" << graph_vec[i].second.first << "\"];\n";
         }
 
         // Générer la fin du fichier GraphViz
