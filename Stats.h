@@ -7,11 +7,15 @@
 *************************************************************************/
 
 //---------- Interface de la classe <Xxx> (fichier Xxx.h) ----------------
-#if ! defined STATS_H 
+#if ! defined STATS_H
 #define STATS_H
 #include <map>
 #include <vector>
+#include <list>
+#include <unordered_map>
+#include <utility>
 #include <string>
+#include "simplelog.h"
 using namespace std;
 
 //--------------------------------------------------- Interfaces utilisées
@@ -25,11 +29,12 @@ using namespace std;
 //
 //
 //------------------------------------------------------------------------
-class log;
-class Stats :
+class Stats
 {
 //----------------------------------------------------------------- PUBLIC
-
+  friend class SimpleLog;
+  friend class lecture;
+  friend ostream& operator<<(ostream& os, const Stats& s);
 public:
 //----------------------------------------------------- Méthodes publiques
     // type Méthode ( liste des paramètres );
@@ -37,9 +42,11 @@ public:
     //
     // Contrat :
     //
-Append(log::log unLog);
+void Append(const SimpleLog& unLog);
 
-void Execute_without_options(string file) const;//on doit afficher sur la console sous forme textuelle la liste des 10 documents les plus consultés par ordre décroissant de popularité
+void Execute_without_options();//on doit afficher sur la console sous forme textuelle la liste des 10 documents les plus consultés par ordre décroissant de popularité
+
+int nbrOccur(const string& url);
 
 //void Execute_with_option_e(string file) const;//Exclure tous les documents qui ont une extension de type image(png, jpg?), css ou javascript genre on appelle la fonction sans option mais sans les images
 
@@ -49,10 +56,8 @@ void Execute_without_options(string file) const;//on doit afficher sur la consol
 
 list<pair<string,int>> Top_10();//mettre dans une liste les  10 documents les plus visités par ordre décroissant de popularité
 
-bool compareOccurrences(const pair<string, int>& a, const pair<string, int>& b);
 
-friend class Log;
-friend lecture;
+
 
 //------------------------------------------------- Surcharge d'opérateurs
     //Stats & operator + ( const Stats & unStats );
@@ -95,4 +100,3 @@ protected:
 //-------------------------------- Autres définitions dépendantes de <Xxx>
 
 #endif // XXX_H
-
