@@ -16,8 +16,8 @@ public:
     void ajouter(const Log& nouveau_log) 
     {
         // Ajouter l'URL et ses informations associées dans la map
-        url_map[nouveau_log.getRequest().url] = 
-            make_pair(nouveau_log.getDate_time(), nouveau_log.getReferer());
+        url_map[nouveau_log.Request().url] = 
+            make_pair(nouveau_log.Date_time(), nouveau_log.Referer());
     }
 
     // Méthode pour afficher les top 10 des pages consultées
