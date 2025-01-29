@@ -1,5 +1,4 @@
 #include "log.h"
-//#include "struct.h"
 
 Log::Log():IP(""), User_Logname(""), Auth_User(""), Date_time({1, Month::JAN, 0, 0, 0, 0, {1, 0, 0}}), Request({Action_type::GET, "", "", ""}),
           status(0), size(0), referer(""), id_client("")
@@ -76,8 +75,16 @@ Log::Log(const string log){
   protocolStr.erase(0,1);
 
   Request.url = urlStr;
+
+  int dot = 0;
+  for (long unsigned int i=0; i<urlStr.length(); i++){
+      if (urlStr[i] == '.'){
+        dot = i;
+      }
+  }
+
   Request.protocol = protocolStr;
-  Request.extension = "undefined for the moment";
+  Request.extension = urlStr.erase(0,dot + 1);
   if (actionStr == "GET") {
     Request.action = Action_type::GET;
   }
