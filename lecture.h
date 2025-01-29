@@ -32,7 +32,7 @@ public:
 string getLogContent() const;
 
 //-------------------------------------------- Constructeurs - destructeur
-    Lecture( ifstream & input);
+    explicit Lecture( const string & filename);
     // Mode d'emploi :
     //
     // Contrat :

@@ -39,23 +39,24 @@ string Lecture::getLogContent() const {
 //} //----- Fin de Méthode
 //-------------------------------------------- Constructeurs - destructeur
 
-Lecture::Lecture(ifstream & input)
+Lecture::Lecture(const string & filename)
 {
+    ifstream apache_log(filename);
     string logLines;
 
-    if (!input.is_open()) {
+    if (!apache_log.is_open()) {
         std::cerr << "Erreur : impossible d'ouvrir le fichier." << std::endl;
         output = logLines;
         return;
     }
 
     string lineContent;
-    while (getline(input, lineContent)) 
+    while (getline(apache_log, lineContent)) 
     {
     logLines += lineContent + "\n";
     }
 
-    input.close();
+    apache_log.close();
     output = logLines;
 }
 
