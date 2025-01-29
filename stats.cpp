@@ -23,14 +23,12 @@ public:
     // Méthode pour afficher les top 10 des pages consultées
     void afficherTop10() const 
     {
-        // Utilisation de url_map au lieu de Url_map
         for (const auto& entry : url_map) {
             const string& log_cible = entry.first;  
             const string& log_ref = entry.second.second;  
 
             int nb = 0;  
-
-            // Comparaison sur url_map
+            
             for (const auto& entry_2 : url_map) {
                 if (entry_2.first == log_cible && entry_2.second.second == log_ref) {
                     nb++;  
