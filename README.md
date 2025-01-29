@@ -41,5 +41,5 @@
 - Destructeur
 
 	**Méthodes :**
-  - 'Ajouter un log' (surcharge de l'opérateur '+')
+  - 'Ajouter un log' 
   - 'Statistiques' : compter le top 10 (avec options de séléction -e, -t et d'affichage du graphe -g) 
