@@ -29,7 +29,7 @@ class Lecture
 
 public:
 //----------------------------------------------------- Méthodes publiques
-string getLogContent() const;
+vector<string> getLogContent() const;
 
 //-------------------------------------------- Constructeurs - destructeur
     explicit Lecture( const string & filename);
@@ -50,7 +50,7 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
-    string output;     
+    vector<string> output;     
 };
 
 //-------------------------------- Autres définitions dépendantes de <lecture>
