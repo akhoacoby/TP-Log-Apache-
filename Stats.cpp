@@ -30,14 +30,20 @@ using namespace std;
 //
 //{
 //} //----- Fin de Méthode
-Stats::Append(log::log unLog )
+  void Stats::Append(const SimpleLog& unSimpleLog)
 {
-    //Algorithms of Malak
+  // Créer un vecteur avec la date/heure et le referer à chaque appel
+  vector<string> infos = {"", unSimpleLog.referer};
+
+  // Ajouter la nouvelle entrée dans le vecteur associé à l'URL
+  url_map[unSimpleLog.Request.url].push_back(infos);  // Ajouter un nouvel élément sans écraser l'existant
 }
+
+
 
 /*void Stats::Execute_with_option_e()
 {
-  
+
 }
 
 void Stats::Execute_with_option_t(int hour)
@@ -52,63 +58,90 @@ void Stats::Execute_with_option_g(string file)
 */
 void Stats::Execute_without_options()
 {
-    myTop = Top_10();
+    list<pair<string,int>> myTop = Top_10();
     auto it = myTop.begin();
+    cout << "Le top 10 des pages les plus visitées est" << endl;
     for(it = myTop.begin(); it != myTop.end(); ++it)
-{
-    cout << " " << it->first;
-} 
-    cout<<endl;    
+  {
+      cout << " " << it->first << "(" << it->second << ")" << endl;
+  }
+    cout<<endl;
 }
 
-int Stats::nbrOccur(const string& url) //Pour chaque url on sait son nombre d'occurence
-{ 
-    int n = 0;
+//int Stats::nbrOccur(const string& url) //Pour chaque url on sait son nombre d'occurence
+//{
+  /*int n = 0;
+  for (const auto& entry : url_map) // Parcours de toutes les entrées du unordered_map
+  {
+  int n = 0;
 
-    for (const auto& entry : url_map) // Parcours de toutes les entrées du unordered_map
-{ 
-        const vector<string>& referers = entry.second; // Récupère la liste des referers
+  const vector<string>& referers = entry.second; // Récupère la liste des referers
 
-        for (const string& referer : referers) // Parcours de tous les referers
-{
-            if (referer == url) 
-{
-                n++; // Incrémente le compteur si le referer correspond
-}
-}
-}
+  for (const string& referer : referers) // Parcours de tous les referers
+    {
+    n++;
+    if (referer == url)
+      {
+      n++; // Incrémente le compteur si le referer correspond
+      }
+    }
+  cout << n << endl;
+  }
 
     return n;
 }
-
+*/
+int Stats::nbrOccur(const string& url)
+{
+  int n = 0;
+  for(  auto it = url_map.begin(); it != url_map.end(); ++it)
+  {
+    if(it->first == url)
+    {
+          n++;
+    }
+  }
+  return n;
+}
 //Les sites avec leur nombre d'occurence et leur url
-list<pair<string,int>> Stats::Top_10()
+list<pair<string, int>> Stats::Top_10()
 {
     int n;
-    list<pair<string, int> top;
-    iterator it = url_map.begin();
-   for (const auto& entry : url_map)
-{
-    n = nbrOccur(entry->first);
-    top.push_back({entry.first, n});
-}
-    // 📌 Tri par ordre décroissant du nombre de visites
-    top.sort(compareOccurrences);
+    list<pair<string, int>> top;
+
+    for (const auto& entry : url_map) {
+        n = nbrOccur(entry.first);
+        top.push_back({entry.first, n});
+    }
+
+    // 📌 Tri par ordre décroissant du nombre de visites avec une lambda expression
+    top.sort([](const pair<string, int>& a, const pair<string, int>& b) {
+        return a.second > b.second;  // Trie en ordre décroissant
+    });
 
     // 📌 Ne garder que les 10 premiers éléments
-    if (top.size() > 10) 
-{
+    if (top.size() > 10) {
         auto it = next(top.begin(), 10);
         top.erase(it, top.end());
-}
+    }
+
     return top;
 }
 
-//Tri par ordre décroissant du nombre d'occurence
-bool Stats::compareOccurrences(const pair<string, int>& a, const pair<string, int>& b) 
-{
-    return a.second > b.second; // Trie en ordre décroissant
+
+ostream& operator<<(ostream& os, const Stats& s){
+    for (const auto& entry : s.url_map) {
+        os << "URL: " << entry.first << "\n";
+        for (const auto& info : entry.second) {
+            os << "  - " << info << "\n";
+        }
+
+        os << "\n";
+    }
+    return os;
 }
+
+
 
 //-------------------------------------------- Constructeurs - destructeur
 Stats::Stats ( const Stats & unStats )
@@ -122,11 +155,11 @@ Stats::Stats ( const Stats & unStats )
 } //----- Fin de Xxx (constructeur de copie)
 
 
-Stats::Stats( ) 
+Stats::Stats( )
 // Algorithme :
 //
 {
-    url_map<"", vector<"">;
+
 #ifdef MAP
     cout << "Appel au constructeur par défaut de <Stats>>" << endl;
 #endif
@@ -146,4 +179,3 @@ Stats::~Stats ( )
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Méthodes protégées
-
