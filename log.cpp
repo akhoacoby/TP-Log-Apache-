@@ -16,9 +16,11 @@ Log::Log(const string log){
   getline(stream, temp, ']');
   istringstream dateStream(temp);
   string datePart, timePart;
-  getline(dateStream, datePart, ' '); // Get the date in format DD/MON/YYYY
-  getline(dateStream, timePart, ' '); // Get the time in format :HH:MM:SS
-  timePart.erase(0,1); // Change time format to HH:MM:SS
+  getline(dateStream, datePart, ':'); // Get the date in format DD/MON/YYYY
+  getline(dateStream, timePart, ' '); // Get the time in format HH:MM:SS
+
+    // cout<<datePart<<endl; //debug
+    // cout<<timePart<<endl;
 
   // DATE //
   istringstream datePartStream(datePart);
