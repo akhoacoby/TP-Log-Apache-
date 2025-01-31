@@ -7,7 +7,20 @@ SimpleLog::SimpleLog():Date_time({1, Month::JAN, 0, 0, 0, 0, {1, 0, 0}}), Reques
 SimpleLog::SimpleLog(const Log& log) {
     this->Date_time = log.Date_time;
     this->Request = log.Request;
-    this->referer = log.referer;
+    string row_referer = log.referer;
+    int dot = 0;
+    for (long unsigned int i = row_referer.length() - 1; i >= 0; i--){
+        if (row_referer[i] == '.'){
+          if (dot == 0){
+            dot = i;
+          }
+          else{
+            dot = i;
+            break;
+          }
+        }
+    }
+    this->referer = row_referer.erase(0,dot + 3);
 }
 
 SimpleLog::~SimpleLog() {
