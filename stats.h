@@ -31,8 +31,7 @@ public:
     //Filtrer par heure
 
 private:
-    unordered_map<string, pair<Date_time, string>> url_map;  
-    // La map qui stocke les informations des URLs
-};
+   unordered_map<string, pair<Date_time, string>> url_map;  
+    vector<pair<string, pair<int, string>>> graph_vec;  
 
 #endif
