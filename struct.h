@@ -34,6 +34,10 @@ typedef struct Date {
     unsigned int minute;
     unsigned int second;
     TimeZone zone;
+
+    bool isLeapYear(int y);
+    int daysInMonth(Month m, int y);
+    string to_string();
 } Date;
 
 enum class Action_type {
@@ -53,5 +57,6 @@ typedef struct Request_info {
 
 ostream& operator<<(std::ostream& os, Month month);
 ostream& operator<<(std::ostream& os, Action_type action);
+
 
 #endif
