@@ -3,6 +3,7 @@
 
 #include "struct.h"
 #include "log.h"
+#include "simplelog.h"
 
 #include <iostream>
 #include <unordered_map>
@@ -20,7 +21,7 @@ public:
     Stats();
     // Constructeur par défaut
 
-    void ajouter(const Log& nouveau_log);
+    void ajouter(const SimpleLog& nouveau_log);
     // Ajouter un log
 
     void afficherTop10() const;
@@ -36,8 +37,10 @@ public:
     //Filtrer par heure
 
 private:
-  multimap<string,tuple<Date, string,string>> url_map{};
-  vector<pair<string, pair<int, string>>> graph_vec;
+  //map dont les cles sont des urls et les valeurs sont la date, le url de reference
+  //et l'extension du premier url respectivement.
+  multimap<string,tuple<Date, string,string>> url_map;
+
 };
 
 #endif
