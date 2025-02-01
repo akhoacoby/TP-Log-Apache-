@@ -3,26 +3,20 @@
 
 
 
+
 Stats::Stats() {}
 
     // Méthode pour ajouter un log dans la map
-    void Stats::ajouter(const Log& nouveau_log)
+    void Stats::ajouter(const SimpleLog& nouveau_log)
     {
         // Ajouter l'URL et ses informations associées dans la map
         url_map.insert({nouveau_log.Request.url, make_tuple(nouveau_log.Date_time, nouveau_log.referer,nouveau_log.Request.extension)});
 
-    /*    for (const auto& entry : url_map) {
-       std::cout << "Clé: " << entry.first
-                 << " -> Description: " << std::get<1>(entry.second)
-                 << " -> Autre info: " << std::get<2>(entry.second)
-                 << endl;
-    }test */
   }
 
     // Méthode pour afficher les top 10 des pages consultées
     void Stats::afficherTop10() const
     {
-
         vector<pair<string, int>> top_urls;
         vector<string> already_seen;
 
@@ -72,29 +66,68 @@ Stats::Stats() {}
             cerr << "Erreur d'ouverture du fichier !" << endl;
             return;
         }
-        //remplir le graph
+
+        //construire la map node
+        unordered_map<string, string> node_map;
+        vector<string> already_seen;
+        int i=0;
         for (const auto& entry : url_map) {
-            const string& log_cible = entry.first;
-            const string& log_ref = get<1>(entry.second);
+            string url_1 = entry.first;
+            string url_2 = get<1>(entry.second);
+
+            if (find(already_seen.begin(), already_seen.end(),url_1) == already_seen.end())
+            {
+                i++;
+                node_map.insert({url_1, "node" + to_string(i)});
+                already_seen.push_back(url_1);
+            }
+            if (find(already_seen.begin(), already_seen.end(),url_2) == already_seen.end())
+            {
+                i++;
+                node_map.insert({url_2, "node" + to_string(i)});
+                already_seen.push_back(url_2);
+            }
+
+        }
+
+
+        //construire le graph des noeuds
+        unordered_map<string, pair<string,int>> graph_map;
+        vector<string> node_seen;
+
+        for (const auto& entry : url_map) {
+            const string& url_cible = entry.first;
+            const string& url_ref = get<1>(entry.second);
 
             int nb = 0;
 
             for (const auto& entry_2 : url_map) {
-                if (entry_2.first == log_cible && get<1>(entry_2.second)== log_ref) {
+
+                if (entry_2.first == url_cible && get<1>(entry_2.second)== url_ref
+                && find(node_seen.begin(), node_seen.end(),url_cible) == node_seen.end() ) {
                     nb++;
+
                 }
             }
 
-            graph_vec.push_back(make_pair(log_cible, make_pair(nb, log_ref)));
+            graph_map.insert({node_map[url_cible],make_pair(node_map[url_ref],nb)});
+            node_seen.push_back(url_cible);
+
         }
 
         // Générer le début du fichier GraphViz
         fichier << "digraph G {\n";
-
-        for (int i = 0; i < graph_vec.size(); i++) {
-            fichier << "node" + to_string(i) << " [label=\"" << graph_vec[i].first << "\"];\n";
-            fichier << "node" + to_string(i) << "->" << graph_vec[i].second.second << " [label=\"" << graph_vec[i].second.first << "\"];\n";
+        for (const auto& entry : node_map)
+        {
+          fichier << entry.second << " [label=\"" << entry.first << "\"];\n";
         }
+
+        for (const auto& entry : graph_map)
+        {
+          fichier << entry.first <<" -> "<<entry.second.first<<"  [label=\"" << entry.second.second << "\"];\n";
+        }
+
+
 
         // Générer la fin du fichier GraphViz
         fichier << "}\n";
