@@ -52,6 +52,7 @@ Log::Log(const string log){
   getline(timePartStream, minuteStr, ':');
   getline(timePartStream, secondStr, ':');
   getline(dateStream, timeZone, ' ');
+          
   Date_time.hour = stoi(hourStr);
   Date_time.minute = stoi(minuteStr);
   Date_time.second = stoi(secondStr);
@@ -99,8 +100,19 @@ Log::Log(const string log){
   string statusStr, sizeStr;
   stream >> statusStr;
   stream >> sizeStr;
-  status = stoi(statusStr);
-  size = stoi(sizeStr);
+          
+  try {
+        status = stoi(statusStr);
+    } catch (const invalid_argument& e) {
+        cout << "The request statut :" << statusStr << "is not an int" << endl;
+        status = -1;
+    }
+    try {
+          size = stoi(sizeStr);
+      } catch (const invalid_argument& e) {
+          cout << "The request size :" << sizeStr << "is not an int" << endl;
+          size = 0;
+      }
 
   getline(stream, temp, '"');
   getline(stream, referer, '"');
