@@ -11,7 +11,7 @@ using namespace std;
 class Log {
   friend class Stats;
   friend class Lecture;
-  friend class simpleLog;
+  friend class SimpleLog;
   friend ostream& operator<<(ostream& os, const Log l);
 public:
   Log();
