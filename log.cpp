@@ -58,19 +58,19 @@ Log::Log(const string log){
      Date_time.hour = stoi(hourStr);
   } catch (const invalid_argument& e) {
         cout << "The hour :" << hourStr << "is not an int" << endl;
-        hour = 0;
+        Date_time.hour = 0;
     }
   try {
      Date_time.minute = stoi(minuteStr);
   } catch (const invalid_argument& e) {
         cout << "The minute :" << minuteStr << "is not an int" << endl;
-        minute = 0;
+        Date_time.minute = 0;
     }
    try {
      Date_time.second = stoi(secondStr);
   } catch (const invalid_argument& e) {
         cout << "The second :" << secondStr << "is not an int" << endl;
-        second = 0;
+        Date_time.second = 0;
     }
 
   //TIMEZONE
