@@ -52,10 +52,26 @@ Log::Log(const string log){
   getline(timePartStream, minuteStr, ':');
   getline(timePartStream, secondStr, ':');
   getline(dateStream, timeZone, ' ');
-          
-  Date_time.hour = stoi(hourStr);
-  Date_time.minute = stoi(minuteStr);
-  Date_time.second = stoi(secondStr);
+
+  // SET 0:0:0 as default timezone if errors      
+  try {
+     Date_time.hour = stoi(hourStr);
+  } catch (const invalid_argument& e) {
+        cout << "The hour :" << hourStr << "is not an int" << endl;
+        hour = 0;
+    }
+  try {
+     Date_time.minute = stoi(minuteStr);
+  } catch (const invalid_argument& e) {
+        cout << "The minute :" << minuteStr << "is not an int" << endl;
+        minute = 0;
+    }
+   try {
+     Date_time.second = stoi(secondStr);
+  } catch (const invalid_argument& e) {
+        cout << "The second :" << secondStr << "is not an int" << endl;
+        second = 0;
+    }
 
   //TIMEZONE
   if (timeZone[0] == '+') {
@@ -65,9 +81,20 @@ Log::Log(const string log){
   } else {
       throw invalid_argument("Invalid time zone format: " + timeZone);
   }
-  Date_time.zone.hour = stoi(timeZone.substr(1, 2));
-  Date_time.zone.minute = stoi(timeZone.substr(3, 2));
+  try {
+     Date_time.zone.hour = stoi(timeZone.substr(1, 2));
+  } catch (const invalid_argument& e) {
+        cout << "The time zone hour :" << timeZone.substr(1, 2) << "is not an int" << endl;
+        Date_time.zone.hour = 0;
+    }
+   try {
+     Date_time.zone.minute = stoi(timeZone.substr(3, 2));
+  } catch (const invalid_argument& e) {
+        cout << "The time zone minute :" << timeZone.substr(3, 2) << "is not an int" << endl;
+        Date_time.zone.minute = 0;
+    }
 
+          
   //REQUEST
   string actionStr, urlStr, protocolStr;
   stream >> actionStr;
